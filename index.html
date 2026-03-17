@@ -1,335 +1,197 @@
 <!DOCTYPE html>
-<html lang="it">
-
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Francesco Chiarantini</title>
-
     <style>
         html, body {
             background-color: white;
             font-family: "Aptos", sans-serif;
             margin: 0;
-            overflow-x: hidden; /* Disabilita lo scroll laterale */
-            width: 100vw; /* Previene spostamenti involontari */
-
-        }
-
-        .container {
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            /* Sposta la sezione più in alto */
-            align-items: flex-start;
-            /* Allinea a sinistra */
-            min-height: 100vh;
-            text-align: left;
-            /* Testo allineato a sinistra */
-            padding-left: 350px;
-            /* Opzionale: aggiunge un margine a sinistra */
-            padding-top: 22vh;
-            /* Regola la posizione verticale */
-
-
-        }
-
-        .profile-img {
-            width: 200px;
-            /* Regola la dimensione */
-            height: 200px;
-            /* Mantieni proporzioni */
-            border-radius: 50%;
-            /* Rende l'immagine circolare */
-            object-fit: cover;
-            /* Evita distorsioni */
-            position: relative;
-            /* Posizione relativa */
-            top: -150px;
-            /* Distanza dal bordo superiore */
-            right: -800px;
-            /* Distanza dal bordo destro */
-        }
-
-
-
-
-        .btnlink {
-            position: relative;
-            top: -300px;
-            /* Distanza dal bordo superiore */
-            left: 1500px;
-            /* Distanza dal bordo sinistro */
-            background: none;
-            color: #8B0000;
-            padding: 10px 20px;
-            font-size: 18px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .btnlink:hover {
-            background-color: #8B0000;
-            color: white;
-        }
-
-        .btnmail {
-            position: relative;
-            top: -300px;
-            /* Distanza dal bordo superiore */
-            left: 1515px;
-            /* Distanza dal bordo sinistro */
-            background: none;
-            color: #8B0000;
-            padding: 10px 20px;
-            font-size: 18px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .btnmail:hover {
-            background-color: #8B0000;
-            color: white;
-        }
-
-
-
-
-
-        .intro {
-            font-size: 60px;
-            margin-bottom: 60px;
+            overflow-x: hidden;
             color: #333;
         }
 
+        /* Nav/Buttons - Fixed to top right so they stay put */
+        .nav-buttons {
+            position: absolute;
+            top: 40px;
+            right: 40px;
+            display: flex;
+            gap: 15px;
+            z-index: 100;
+        }
+
+        .btn-action {
+            background: none;
+            color: #8B0000;
+            padding: 8px 16px;
+            font-size: 18px;
+            border: 1px solid transparent;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .btn-action:hover {
+            background-color: #8B0000;
+            color: white;
+        }
+
+        /* Hero Section */
+        .container {
+            display: flex;
+            flex-direction: row; /* Side by side */
+            justify-content: space-between;
+            align-items: center;
+            min-height: 80vh;
+            padding: 0 10%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero-text {
+            max-width: 600px;
+        }
+
+        .intro {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+
         .description {
-            font-size: 34px;
+            font-size: 32px;
+            line-height: 1.2;
             color: #555;
+            margin-bottom: 40px;
         }
 
         .undertext {
             font-size: 20px;
-            color: #555;
+            color: #666;
+            line-height: 1.5;
         }
 
-        .highlight {
-            color: #333;
+        .profile-img {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid #f4f4f4;
         }
 
+        .highlight { color: #333; font-weight: bold; }
+        .red-highlight { color: #8B0000; }
 
-
-
-
-
-        /* Seconda pagina*/
-
-        .background-section,
-        .projects-section {
+        /* Sections Layout */
+        .content-grid {
             display: grid;
-            grid-template-columns: 36% 28% 36%;
-            /* Prima colonna per il titolo, seconda per il testo, terza per extra */
+            grid-template-columns: 30% 40% 30%;
+            gap: 40px;
+            padding: 80px 5%;
             align-items: start;
-            gap: 20px;
-            padding-bottom: 40px; /* Aggiunge spazio extra in coda */
-
         }
 
-        .background-title,
-        .projects-title {
+        .section-title {
             text-align: right;
-            /* Allinea il testo del titolo a destra */
             color: #8B0000;
-            font-size: 20px;
+            font-size: 18px;
             font-weight: bold;
             text-transform: uppercase;
-            width: 100%;
-            /* Assicura allineamento uniforme */
         }
 
-
-        .background-text,
-        .projects-text {
-            color: #333;
+        .section-text {
             font-size: 18px;
-            margin-bottom: 50px;
+            line-height: 1.6;
+            color: #555;
+            text-align: justify;
+        }
+
+        .video-container video {
             width: 100%;
-            /* Assicura allineamento uniforme */
-            text-align: justify;
-            /* Giustifica il testo */
-            color: #555;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
-        .extra-column {
-            display: flex;
-            justify-content: flex-start;
-            /* Allinea gli elementi a sinistra */
-            align-items: flex-start;
-            /* Mantiene l'allineamento verticale */
-            text-align: justify;
-            /* Testo allineato a sinistra */
+        .project-info {
             font-size: 16px;
-            width: 20%;
-            /* Assicura allineamento uniforme */
             color: #555;
         }
-        video {
-            margin-top: 20px; /* Regola la distanza dall'alto */
-            display: block;
-            width: 100%; /* Adatta alla colonna */
-        }
 
-    
-    
-
-
-        @media (max-width: 768px) {
-            .container {
-                padding-left: 0;
-                /* Elimina margine sinistro */
-                text-align: center;
-                /* Centra il contenuto */
-                align-items: center;
-                /* Mantiene tutto centrato */
-            }
-
-            .background-section,
-            .projects-section {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-            }
-
-            .background-title,
-            .projects-title {
-                text-align: center;
-                width: 100%;
-                /* Assicura allineamento uniforme */
-            }
-
-            .background-text,
-            .projects-text {
-                max-width: 90%;
-                text-align: center;
-                justify-content: center;
-            }
-
-            .btn-container {
-                display: flex;
-                justify-content: center;
-                gap: 20px;
-                width: 100%;
-            }
-
-            .btnlink,
-            .btnmail {
-                display: inline-block;
-                margin: 10px;
-            }
-
-        .extra-column {
-            width: 80%;
-            text-align: center;
-            justify-content: center;
-        }
+        /* Mobile Responsive */
+        @media (max-width: 900px) {
+            .container { flex-direction: column-reverse; text-align: center; padding-top: 100px; }
+            .content-grid { grid-template-columns: 1fr; text-align: center; }
+            .section-title { text-align: center; }
+            .nav-buttons { width: 100%; justify-content: center; right: 0; top: 20px; }
         }
     </style>
 </head>
-
 <body>
+
+    <nav class="nav-buttons">
+        <a href="https://www.linkedin.com/in/francesco-chiarantini" class="btn-action">LinkedIn</a>
+        <a href="mailto:francesco.chiarantini@outlook.com" class="btn-action">Mail</a>
+    </nav>
 
     <!-- Intro -->
     <div class="container">
-        <div class="intro">Hi!</div>
-        <div class="description">
-            I'm <strong class="highlight">Francesco Chiarantini</strong>, a passionate gamer<br>
-            in love with worldbuilding and storytelling.<br><br><br><br><br>
+        <div class="hero-text">
+            <div class="intro">Hi!</div>
+            <div class="description">
+                I'm <span class="highlight">Francesco Chiarantini</span>, a passionate gamer in love with worldbuilding and storytelling.
+            </div>
+            <div class="undertext">
+                Currently studying CS at Sapienza University.<br>
+                As I experiment with UE5 and C++, I look forward to <strong>putting</strong> myself to the test and growing.
+            </div>
         </div>
-        <div class="undertext">Currently studying CS at Sapienza University<br>
-            As I experiment with UE5 and C++, I look forward to put myself to the test and grow.
-        </div>
-        <img src="Profile pic.jpg" alt="Profile Picture" class="profile-img">
+        <img src="Profile pic.jpg" alt="Francesco" class="profile-img">
     </div>
 
-    <a href="https://www.linkedin.com/in/francesco-chiarantini">
-        <button class="btnlink">LinkedIn</button></a>
-    <a href="mailto:francesco.chiarantini@outlook.com?subject=body=">
-        <button class="btnmail">Mail</button></a>
-
-
-
-    <div class="background-section">
-        <h2 class="background-title">Background</h2>
-        <p class="background-text">After four years in the movie industry as a Location and Unit Manager
-            on major projects such as <strong class="highlight">"Mission Impossibile: Dead Reckoning"</strong>,<strong class="highlight">
-                "House of Gucci"</strong> and <strong class="highlight">"The Old Guard II"</strong>, I decided to pursue my passion of game
-            development.<br><br>
-
-            I began this new chapter by earning the <strong class="highlight">Epic Games certification in Game Design for Unreal Engine 5</strong>, with a focus on gameplay programming, while studying Computer Science at Sapienza University solidify my technical foundations. In the meantime, I’ve been applying what I learn through a couple of personal projects — some of which you’ll find below.<br>
-            Now, I’m looking for an opportunity to deepen my skills and gain real, hands-on experience in the game industry</p>
-        <div class="extra-column">
-            <p></p>
+    <!-- Background -->
+    <div class="content-grid">
+        <h2 class="section-title">Background</h2>
+        <div class="section-text">
+            After four years in the movie industry as a Location and Unit Manager on major projects such as 
+            <span class="highlight">"Mission Impossible: Dead Reckoning"</span>, 
+            <span class="highlight">"House of Gucci"</span> and <span class="highlight">"The Old Guard II"</span>, 
+            I decided to pursue my passion for game development.<br><br>
+            I began this new chapter by earning the <span class="highlight">Epic Games certification in Game Design for Unreal Engine 5</span>, focusing on gameplay programming, while studying Computer Science at Sapienza University to solidify my technical foundations.
         </div>
+        <div><!-- Spacer --></div>
     </div>
 
-
-    <div class="projects-section">
-        <h2 class="projects-title">Projects</h2>
-        <video width="550" autoplay muted loop>
-            <source src="Penguin_Core.mp4" type="video/mp4">
-        </video>
-
-
-        <div class="extra-column">
+    <!-- Project 1 -->
+    <div class="content-grid">
+        <h2 class="section-title">Projects</h2>
+        <div class="video-container">
+            <video autoplay muted loop playsinline>
+                <source src="Penguin_Core.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div class="project-info">
             <p><strong class="highlight">Penguin Sim</strong><br>
-                My first self-taught project, Inspired by a real life cognitive experiment on African Penguins.<br>
-                It features interactive objects, an AI that will catch you if escaping and a personalization system for
-                the penguin, which I modelled and animated myself.<br><br>Not a Dimond, but it shines.</p>
+            Inspired by a real-life cognitive experiment on African Penguins. It features interactive objects, an AI system, and a character I modeled and animated myself.<br><br>
+            <em>Not a diamond, but it shines.</em></p>
         </div>
     </div>
-    
-    
-    
-     <div class="projects-section">
-        <h2 class="projects-title"></h2>
-        <video width="550" autoplay muted loop>
-            <source src="Workshop.mp4" type="video/mp4">
-        </video>
 
-
-        <div class="extra-column">
+    <!-- Project 2 -->
+    <div class="content-grid">
+        <h2 class="section-title"></h2>
+        <div class="video-container">
+            <video autoplay muted loop playsinline>
+                <source src="Workshop.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div class="project-info">
             <p><strong class="highlight">Course Workshop</strong><br>
-               After completing the Unreal Engine 5 course, I applied what I had learned by experimenting with various
-               features and gameplay mechanics to create a fun and dynamic experience.<br>
-                I worked on AI that reacts to sound and attacks, special moves, consumable items with an interactive
-                inventory, and—my favorite— the throwing shield.</p>
+            Experimenting with AI sound-reactivity, interactive inventories, and a throwing shield mechanic. Built to bridge the gap between course theory and practical gameplay feel.</p>
         </div>
     </div>
-
-
-
-         <div class="projects-section">
-        <h2 class="projects-title"></h2>
-        <video width="550" autoplay muted loop>
-            <source src="Workshop.mp4" type="video/mp4">
-        </video>
-
-
-        <div class="extra-column">
-            <p><strong class="highlight">Corpo Ladder</strong><br>
-               Stay Tuned For more!.</p>
-        </div>
-    </div>
-
-
-
-
-
-
-
 
 </body>
-
 </html>
