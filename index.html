@@ -3,194 +3,311 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Francesco Chiarantini</title>
+    <title>Francesco Chiarantini | Gameplay Programmer & Tech Designer</title>
     <style>
-        html, body {
-            background-color: white;
-            font-family: "Aptos", sans-serif;
-            margin: 0;
-            overflow-x: hidden;
-            color: #333;
+        :root {
+            --primary: #8B0000;
+            --primary-hover: #600000;
+            --text-main: #222222;
+            --text-muted: #555555;
+            --bg-light: #f9f9f9;
+            --border-color: #e5e5e5;
         }
 
-        /* Nav/Buttons - Fixed to top right so they stay put */
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            background-color: #ffffff;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* Top Navigation */
         .nav-buttons {
             position: absolute;
-            top: 40px;
+            top: 30px;
             right: 40px;
             display: flex;
-            gap: 15px;
+            gap: 12px;
             z-index: 100;
         }
 
         .btn-action {
             background: none;
-            color: #8B0000;
-            padding: 8px 16px;
-            font-size: 18px;
-            border: 1px solid transparent;
-            border-radius: 5px;
+            color: var(--primary);
+            padding: 8px 18px;
+            font-size: 15px;
+            font-weight: 600;
+            border: 1.5px solid var(--primary);
+            border-radius: 6px;
             cursor: pointer;
             text-decoration: none;
-            transition: 0.3s;
+            transition: all 0.2s ease;
         }
 
         .btn-action:hover {
-            background-color: #8B0000;
-            color: white;
+            background-color: var(--primary);
+            color: #ffffff;
+        }
+
+        /* Layout Container */
+        .page-wrapper {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
         }
 
         /* Hero Section */
-        .container {
+        .hero {
             display: flex;
-            flex-direction: row; /* Side by side */
+            flex-direction: row;
             justify-content: space-between;
             align-items: center;
-            min-height: 80vh;
-            padding: 0 10%;
-            max-width: 1200px;
-            margin: 0 auto;
+            min-height: 75vh;
+            padding-top: 60px;
+            gap: 40px;
         }
 
         .hero-text {
-            max-width: 600px;
+            max-width: 650px;
         }
 
         .intro {
-            font-size: 60px;
-            margin-bottom: 20px;
+            font-size: 54px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            letter-spacing: -1px;
         }
 
         .description {
-            font-size: 32px;
-            line-height: 1.2;
-            color: #555;
-            margin-bottom: 40px;
+            font-size: 26px;
+            line-height: 1.3;
+            color: var(--text-main);
+            margin-bottom: 18px;
         }
 
         .undertext {
-            font-size: 20px;
-            color: #666;
+            font-size: 18px;
+            color: var(--text-muted);
             line-height: 1.5;
         }
 
         .profile-img {
-            width: 250px;
-            height: 250px;
+            width: 220px;
+            height: 220px;
             border-radius: 50%;
             object-fit: cover;
-            border: 5px solid #f4f4f4;
+            border: 4px solid var(--bg-light);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+            flex-shrink: 0;
         }
 
-        .highlight { color: #333; font-weight: bold; }
-        .red-highlight { color: #8B0000; }
+        .highlight { color: #111; font-weight: 600; }
+        .red-highlight { color: var(--primary); font-weight: 600; }
 
-        /* Sections Layout */
-        .content-grid {
-            display: grid;
-            grid-template-columns: 30% 40% 30%;
-            gap: 40px;
-            padding: 80px 5%;
-            align-items: start;
+        /* Section Layout */
+        .section {
+            padding: 60px 0;
+            border-top: 1px solid var(--border-color);
         }
 
-        .section-title {
-            text-align: right;
-            color: #8B0000;
-            font-size: 18px;
-            font-weight: bold;
+        .section-header {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--primary);
             text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 30px;
         }
 
-        .section-text {
+        .background-content {
             font-size: 18px;
-            line-height: 1.6;
-            color: #555;
-            text-align: justify;
+            color: var(--text-muted);
+            max-width: 850px;
+        }
+
+        /* Projects Layout */
+        .project-card {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 40px;
+            align-items: center;
+            margin-bottom: 70px;
+        }
+
+        .project-card:last-child {
+            margin-bottom: 0;
         }
 
         .video-container video {
             width: 100%;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            display: block;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            background: #000;
         }
 
-        .project-info {
+        .project-info h3 {
+            font-size: 24px;
+            margin: 0 0 10px 0;
+            color: var(--text-main);
+        }
+
+        .project-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 14px;
+        }
+
+        .tag {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            background: #eee;
+            padding: 4px 10px;
+            border-radius: 4px;
+            color: #444;
+        }
+
+        .project-description {
             font-size: 16px;
-            color: #555;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            line-height: 1.6;
         }
 
-        /* Mobile Responsive */
-        @media (max-width: 900px) {
-            .container { flex-direction: column-reverse; text-align: center; padding-top: 100px; }
-            .content-grid { grid-template-columns: 1fr; text-align: center; }
-            .section-title { text-align: center; }
-            .nav-buttons { width: 100%; justify-content: center; right: 0; top: 20px; }
+        .btn-link {
+            display: inline-block;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--primary);
+            text-decoration: none;
+            border: 1px solid var(--primary);
+            padding: 6px 14px;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-link:hover {
+            background-color: var(--primary);
+            color: #fff;
+        }
+
+        /* Responsive */
+        @media (max-width: 850px) {
+            .hero {
+                flex-direction: column-reverse;
+                text-align: center;
+                padding-top: 100px;
+                min-height: auto;
+            }
+            .project-card {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .nav-buttons {
+                top: 20px;
+                right: 0;
+                width: 100%;
+                justify-content: center;
+            }
+            .section-header {
+                text-align: center;
+            }
         }
     </style>
 </head>
 <body>
 
+    <!-- Nav: GitHub aggiunto ed essenziale -->
     <nav class="nav-buttons">
-        <a href="https://www.linkedin.com/in/francesco-chiarantini" class="btn-action">LinkedIn</a>
+        <a href="https://github.com/DiplexFrancesco" target="_blank" class="btn-action">GitHub</a>
+        <a href="https://www.linkedin.com/in/francesco-chiarantini" target="_blank" class="btn-action">LinkedIn</a>
         <a href="mailto:francesco.chiarantini@outlook.com" class="btn-action">Mail</a>
     </nav>
 
-    <!-- Intro -->
-    <div class="container">
-        <div class="hero-text">
-            <div class="intro">Hi!</div>
-            <div class="description">
-                I'm <span class="highlight">Francesco Chiarantini</span>, a passionate gamer in love with worldbuilding and storytelling.
+    <div class="page-wrapper">
+        <!-- Hero Section -->
+        <header class="hero">
+            <div class="hero-text">
+                <div class="intro">Hi, I'm Francesco.</div>
+                <div class="description">
+                    <span class="highlight">Gameplay Programmer & Technical Designer</span> combining Computer Science rigor with cinematic production experience.
+                </div>
+                <div class="undertext">
+                    CS Student at Sapienza University of Rome.<br>
+                    Focused on <span class="red-highlight">Unreal Engine 5</span>, <span class="red-highlight">C++</span>, and gameplay architecture.
+                </div>
             </div>
-            <div class="undertext">
-                Currently studying CS at Sapienza University.<br>
-                As I experiment with UE5 and C++, I look forward to put myself to the test and growing.
+            <img src="Profile pic.jpg" alt="Francesco Chiarantini" class="profile-img">
+        </header>
+
+        <!-- Background Section -->
+        <section class="section">
+            <div class="section-header">Background</div>
+            <div class="background-content">
+                Before transitioning to game development, I spent four years in the film industry as a Location & Unit Manager on large-scale international productions including 
+                <span class="highlight">"Mission: Impossible – Dead Reckoning"</span>, 
+                <span class="highlight">"House of Gucci"</span>, and 
+                <span class="highlight">"The Old Guard II"</span>.<br><br>
+                That career taught me how to manage high-stress pipelines, collaborate across multidisciplinary teams, and direct technical logistics. Today, I bring that production mindset into software development, holding an <span class="highlight">Epic Games Certification in Game Design for UE5</span> and currently reading Computer Science at Sapienza to master low-level programming and software architecture.
             </div>
-        </div>
-        <img src="Profile pic.jpg" alt="Francesco" class="profile-img">
-    </div>
+        </section>
 
-    <!-- Background -->
-    <div class="content-grid">
-        <h2 class="section-title">Background</h2>
-        <div class="section-text">
-            After four years in the movie industry as a Location and Unit Manager on major projects such as 
-            <span class="highlight">"Mission Impossible: Dead Reckoning"</span>, 
-            <span class="highlight">"House of Gucci"</span> and <span class="highlight">"The Old Guard II"</span>, 
-            I decided to pursue my passion for game development.<br><br>
-            I began this new chapter by earning the <span class="highlight">Epic Games certification in Game Design for Unreal Engine 5</span>, focusing on gameplay programming, while studying Computer Science at Sapienza University to solidify my technical foundations.
-        </div>
-        <div><!-- Spacer --></div>
-    </div>
+        <!-- Projects Section -->
+        <section class="section">
+            <div class="section-header">Featured Projects</div>
 
-    <!-- Project 1 -->
-    <div class="content-grid">
-        <h2 class="section-title">Projects</h2>
-        <div class="video-container">
-            <video autoplay muted loop playsinline>
-                <source src="Penguin_Core.mp4" type="video/mp4">
-            </video>
-        </div>
-        <div class="project-info">
-            <p><strong class="highlight">Penguin Sim</strong><br>
-            Inspired by a real-life cognitive experiment on African Penguins. It features interactive objects, an AI system, and a character I modeled and animated myself.<br><br>
-            <em>Not a diamond, but it shines.</em></p>
-        </div>
-    </div>
+            <!-- Project 1: Z-Halo -->
+            <article class="project-card">
+                <div class="video-container">
+                    <video autoplay muted loop playsinline>
+                        <source src="ZHalo.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="project-info">
+                    <h3>Z-Halo</h3>
+                    <div class="project-tags">
+                        <span class="tag">Java</span>
+                        <span class="tag">OOP Architecture</span>
+                        <span class="tag">2D Gameplay</span>
+                    </div>
+                    <p class="project-description">
+                        A top-down 2D action-adventure merging Zelda-like mechanics with the Halo universe. Built from the ground up in Java, featuring 9 levels, state-driven enemy behaviors, customizable loadouts, inventory management, and persistent save profiles.
+                    </p>
+                    <!-- Inserisci qui il link alla tua repo GitHub -->
+                    <a href="https://github.com/TUO-USERNAME/Z-Halo" target="_blank" class="btn-link">View Source Code &rarr;</a>
+                </div>
+            </article>
 
-    <!-- Project 2 -->
-    <div class="content-grid">
-        <h2 class="section-title"></h2>
-        <div class="video-container">
-            <video autoplay muted loop playsinline>
-                <source src="Workshop.mp4" type="video/mp4">
-            </video>
-        </div>
-        <div class="project-info">
-            <p><strong class="highlight">Course Workshop</strong><br>
-            Experimenting with AI sound-reactivity, interactive inventories, and a throwing shield mechanic. Built to bridge the gap between course theory and practical gameplay feel.</p>
-        </div>
+            <!-- Project 2: Penguin Sim -->
+            <article class="project-card">
+                <div class="video-container">
+                    <video autoplay muted loop playsinline>
+                        <source src="Penguin_Core.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="project-info">
+                    <h3>Penguin Sim</h3>
+                    <div class="project-tags">
+                        <span class="tag">Unreal Engine 5</span>
+                        <span class="tag">AI Systems</span>
+                        <span class="tag">Blender 3D</span>
+                    </div>
+                    <p class="project-description">
+                        Interactive simulation based on cognitive studies of African Penguins. Features custom AI decision-making (environmental awareness and object interaction), combined with custom 3D character modeling and rigged animations created end-to-end.
+                    </p>
+                    <a href="https://github.com/TUO-USERNAME/Penguin-Sim" target="_blank" class="btn-link">Project Details & Code &rarr;</a>
+                </div>
+            </article>
+
+        </section>
     </div>
 
 </body>
