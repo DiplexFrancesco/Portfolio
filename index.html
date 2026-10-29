@@ -2,7 +2,603 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, init<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Francesco Chiarantini | Gameplay Programming & Technical Design</title>
+    <style>
+        :root {
+            --primary: #8B0000;
+            --primary-hover: #6a0000;
+            --text-main: #1f1f1f;
+            --text-muted: #555555;
+            --bg-subtle: #f8f9fa;
+            --border-color: #e5e7eb;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #ffffff;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* Top Navigation */
+        .navbar {
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 14px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            font-weight: 700;
+            font-size: 17px;
+            color: var(--text-main);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 14.5px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .btn-nav-action {
+            color: var(--primary);
+            border: 1.5px solid var(--primary);
+            padding: 6px 14px;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .btn-nav-action:hover {
+            background-color: var(--primary);
+            color: #ffffff;
+        }
+
+        /* Layout */
+        .page-wrapper {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .section {
+            padding: 80px 0;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .section-header {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 35px;
+        }
+
+        /* Hero */
+        .hero {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 70vh;
+            padding: 60px 0 40px 0;
+            gap: 40px;
+        }
+
+        .hero-text {
+            max-width: 650px;
+        }
+
+        .intro {
+            font-size: 52px;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 16px;
+            letter-spacing: -1px;
+        }
+
+        .role-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 14px;
+        }
+
+        .hero-summary {
+            font-size: 18px;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-bottom: 28px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .profile-img {
+            width: 210px;
+            height: 210px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--bg-subtle);
+            box-shadow: 0 4px 18px rgba(0,0,0,0.06);
+            flex-shrink: 0;
+        }
+
+        /* Common Buttons */
+        .btn-solid {
+            background-color: var(--primary);
+            color: #ffffff;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 14.5px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: background 0.2s;
+        }
+
+        .btn-solid:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn-outline {
+            border: 1.5px solid var(--primary);
+            color: var(--primary);
+            padding: 9px 18px;
+            border-radius: 6px;
+            font-size: 14.5px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.2s;
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: #ffffff;
+        }
+
+        /* Projects Section */
+        .project-card {
+            display: grid;
+            grid-template-columns: 1.25fr 1fr;
+            gap: 40px;
+            align-items: center;
+            margin-bottom: 70px;
+        }
+
+        .project-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .video-container video {
+            width: 100%;
+            display: block;
+            border-radius: 8px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            background: #000;
+        }
+
+        .project-info h3 {
+            font-size: 22px;
+            margin: 0 0 8px 0;
+        }
+
+        .project-tags {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-bottom: 14px;
+        }
+
+        .tag {
+            font-size: 12px;
+            font-weight: 600;
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-color);
+            padding: 3px 9px;
+            border-radius: 4px;
+            color: #444;
+        }
+
+        .project-description {
+            font-size: 15.5px;
+            color: var(--text-muted);
+            margin-bottom: 18px;
+            line-height: 1.6;
+        }
+
+        .project-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+
+        .note-text {
+            font-size: 12px;
+            color: #777;
+            margin: 4px 0 0 0;
+        }
+
+        /* In The Lab Callout */
+        .lab-box {
+            background: var(--bg-subtle);
+            border-left: 3px solid var(--primary);
+            padding: 18px 24px;
+            border-radius: 0 6px 6px 0;
+            margin-top: 50px;
+            font-size: 14.5px;
+            color: var(--text-muted);
+        }
+
+        .lab-box strong {
+            color: var(--text-main);
+        }
+
+        /* About Section (The 3 Factual Pillars) */
+        .about-text {
+            font-size: 17px;
+            color: var(--text-muted);
+            max-width: 900px;
+            line-height: 1.65;
+            margin-bottom: 35px;
+        }
+
+        .pillars-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .pillar-card {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 24px;
+        }
+
+        .pillar-card h4 {
+            margin: 0 0 12px 0;
+            font-size: 16px;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .pillar-card ul {
+            margin: 0;
+            padding-left: 18px;
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .pillar-card li {
+            margin-bottom: 8px;
+        }
+
+        /* CV & Contact Section */
+        .cv-card {
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .cv-text h3 {
+            margin: 0 0 8px 0;
+            font-size: 22px;
+        }
+
+        .cv-text p {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 15px;
+        }
+
+        .contact-links {
+            margin-top: 35px;
+            display: flex;
+            gap: 20px;
+            font-size: 15px;
+            flex-wrap: wrap;
+        }
+
+        .contact-links a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .contact-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 850px) {
+            .hero {
+                flex-direction: column-reverse;
+                text-align: center;
+                padding-top: 40px;
+            }
+            .hero-buttons {
+                justify-content: center;
+            }
+            .project-card {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .pillars-grid {
+                grid-template-columns: 1fr;
+            }
+            .cv-card {
+                flex-direction: column;
+                text-align: center;
+            }
+            .nav-links {
+                display: none; /* In mobile si può semplificare */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sticky Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-brand">Francesco Chiarantini</a>
+            <div class="nav-links">
+                <a href="#projects" class="nav-link">Projects</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#contact" class="nav-link">Contact</a>
+                <a href="https://diplexfrancesco.itch.io/" target="_blank" class="nav-link">itch.io</a>
+                <a href="https://github.com/DiplexFrancesco" target="_blank" class="nav-link">GitHub</a>
+                <a href="#contact" class="btn-nav-action">Get CV</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-wrapper">
+        
+        <!-- Hero Section -->
+        <header class="hero">
+            <div class="hero-text">
+                <div class="intro">Hi, I'm Francesco.</div>
+                <div class="role-title">Gameplay Programming & Technical Game Design</div>
+                <div class="hero-summary">
+                    Computer Science student at Sapienza University of Rome, focusing on <strong>Unreal Engine 5</strong> and <strong>C++</strong>.<br>
+                    Bringing a practical background in film production management and team athletics into software engineering.
+                </div>
+                <div class="hero-buttons">
+                    <a href="#projects" class="btn-solid">View Projects</a>
+                    <a href="#contact" class="btn-outline">Get Resume / CV</a>
+                </div>
+            </div>
+            <img src="Profile pic.jpg" alt="Francesco Chiarantini" class="profile-img">
+        </header>
+
+        <!-- Section: Featured Projects -->
+        <section id="projects" class="section">
+            <div class="section-header">Featured Projects</div>
+
+            <!-- Project 1: Z-Halo -->
+            <article class="project-card">
+                <div class="video-container">
+                    <video autoplay muted loop playsinline>
+                        <source src="Z-Halo.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="project-info">
+                    <h3>Z-Halo</h3>
+                    <div class="project-tags">
+                        <span class="tag">Java</span>
+                        <span class="tag">OOP Architecture</span>
+                        <span class="tag">Custom 2D Loop</span>
+                    </div>
+                    <p class="project-description">
+                        A top-down 2D action-adventure merging Zelda-like progression with the Halo universe. Built from scratch in Java without external game engines, featuring 9 levels, a fixed-timestep game loop, finite-state machine enemy AI, loadout customization, and local save profiles.
+                    </p>
+                    <div class="project-actions">
+                        <a href="https://diplexfrancesco.itch.io/z-halo" target="_blank" class="btn-solid" style="padding: 6px 14px; font-size: 13.5px;">Play on itch.io &rarr;</a>
+                        <a href="mailto:francesco.chiarantini@outlook.com?subject=Code%20Request:%20Z-Halo" class="btn-outline" style="padding: 5px 12px; font-size: 13.5px;">Request Source Code</a>
+                    </div>
+                    <p class="note-text"><em>(Repository temporarily private due to university academic evaluation)</em></p>
+                </div>
+            </article>
+
+            <!-- Project 2: Penguin Sim -->
+            <article class="project-card">
+                <div class="video-container">
+                    <video autoplay muted loop playsinline>
+                        <source src="Penguin_Core.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="project-info">
+                    <h3>Penguin Sim</h3>
+                    <div class="project-tags">
+                        <span class="tag">Unreal Engine 5</span>
+                        <span class="tag">C++ & Blueprints</span>
+                        <span class="tag">AI Systems</span>
+                        <span class="tag">Blender</span>
+                    </div>
+                    <p class="project-description">
+                        Interactive behavioral simulation based on cognitive studies of African Penguins. Includes environmental interaction systems, perception-based decision making, and end-to-end custom 3D asset modeling and rigged animation.
+                    </p>
+                    <div class="project-actions">
+                        <a href="https://github.com/DiplexFrancesco/Penguin-Sim" target="_blank" class="btn-outline" style="padding: 5px 12px; font-size: 13.5px;">View Repository &rarr;</a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Current Focus Note -->
+            <div class="lab-box">
+                <strong><div class="lab-box">
+    <strong>Current Technical Focus:</strong> Rebuilding the penguin project in Unreal Engine 5 to practice writing gameplay logic in C++ (moving away from pure Blueprints), while preparing builds for upcoming internship applications.
+</div>
+            </div>
+        </section>
+
+        <!-- Section: About Me -->
+        <section id="about" class="section">
+            <div class="section-header">About & Background</div>
+            <div class="about-text">
+                My approach to game development is built on real-world constraints, teamwork, and clear communication. Before focusing fully on software development, I spent five years managing production logistics on international film sets and leading a rugby team on the field. Today, I combine that practical discipline with Computer Science foundations to build structured, responsive game systems.
+            </div>
+
+            <!-- The 3 Factual Pillars (Senza nomi gonfiati) -->
+            <div class="pillars-grid">
+                <div class="pillar-card">
+                    <h4>Software & Game Dev</h4>
+                    <ul>
+                        <li><strong>B.Sc. in Computer Science</strong> (Current), Sapienza University of Rome.</li>
+                        <li><strong>Epic Games Certified</strong> in Game Design for Unreal Engine 5.</li>
+                        <li>Focus: C++, Java, Object-Oriented Design.</li>
+                    </ul>
+                </div>
+
+                <div class="pillar-card">
+                    <h4>Film Production & Writing</h4>
+                    <ul>
+                        <li><strong>Diploma in Directing & Screenwriting</strong>, Accademia Griffith.</li>
+                        <li>4 years as <strong>Location & Unit Manager</strong> on international productions (*Mission: Impossible – Dead Reckoning*, *House of Gucci*).</li>
+                        <li>Screenplay and direction for festival-screened short projects.</li>
+                    </ul>
+                </div>
+
+                <div class="pillar-card">
+                    <h4>Leadership & Athletics</h4>
+                    <ul>
+                        <li><strong>Team Captain</strong>, Rugby Roma Olimpic Club 1930 (promoted to B league).</li>
+                        <li>Former youth rugby coach.</li>
+                        <li>Practical experience in accountability, cross-functional collaboration, and decision-making under stress.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: CV & Contact -->
+        <section id="contact" class="section">
+            <div class="section-header">Get in Touch</div>
+
+            Hai colto un punto strategico fondamentale. Dichiarare solo "summer internship"
+è un autogol per tre motivi precisi:
+
+Perché è limitante
+
+1.  Taglia fuori gli studi AA e Indie: I programmi formali di "Summer
+    Internship" (giugno–settembre) sono una tipicità dei colossi americani o di
+    pochi studi enormi. La maggior parte degli studi in Europa e in Italia (come
+    Milestone, Ubisoft Milan, Stormind o studi indie europei) non ha una
+    finestra estiva rigida: quando cercano un junior o uno stagista, lo cercano
+    per stage di 6 mesi (spesso finalizzati all'assunzione) o direttamente con
+    contratti Junior / Entry-Level.
+2.  Dà l'idea di una disponibilità a tempo determinato ("mordi e fuggi"): Un
+    lead dev potrebbe pensare: "Se lo formo per 2 mesi d'estate e a settembre se
+    ne va per tornare ai corsi universitari, non mi conviene investire tempo nel
+    suo onboarding".
+3.  Ti preclude posizioni Junior / Associate: Con il tuo background (laurea in
+    arrivo, esperienza reale di produzione cinematografica, maturità personale),
+    molti studi potrebbero considerarti direttamente per un ruolo da Junior
+    Gameplay Programmer o Junior Technical Designer, non per forza da stagista.
+
+Come impostarlo con un respiro più ampio
+
+L'approccio migliore e standard nell'industria è usare formule che tengano
+aperte tutte le porte (Junior, Stage, Trainee), indicando anche la disponibilità
+geografica (che ai recruiter interessa tantissimo).
+
+Ecco 3 opzioni da sostituire nel box Get in Touch a fondo pagina:
+
+Opzione 1: La più equilibrata e professionale (Consigliata)
+
+"Currently open to Junior, Trainee, and Internship opportunities in Gameplay
+Programming and Technical Design (Europe / Remote)."
+
+Opzione 2: Più orientata all'ingresso nel team
+
+"Looking for entry-level opportunities and internships where I can contribute to
+gameplay systems, engine architecture, and production pipelines."
+
+Opzione 3: Sintetica e orientata alla collaborazione
+
+"Open to full-time, junior, and internship positions starting 2027. Available
+for relocation across Europe or remote work."
+
+Nel codice: la modifica pratica
+
+Nel blocco <div class="cv-card"> a fondo pagina, ti basta sostituire il
+paragrafo così:
+
+<div class="cv-card">
+    <div class="cv-text">
+        <h3>Interested in working together?</h3>
+        <p>Open to Junior, Trainee, and Internship opportunities in Gameplay Programming & Technical Design (Europe / Remote).</p>
+    </div>
+    <a href="Francesco_Chiarantini_CV.pdf" target="_blank" class="btn-solid" download>
+        Download CV (PDF) &darr;
+    </a>
+</div>
+            <div class="contact-links">
+                <span>Email: <a href="mailto:francesco.chiarantini@outlook.com">francesco.chiarantini@outlook.com</a></span>
+                <span>LinkedIn: <a href="https://www.linkedin.com/in/francesco-chiarantini" target="_blank">in/francesco-chiarantini</a></span>
+                <span>itch.io: <a href="https://diplexfrancesco.itch.io/" target="_blank">diplexfrancesco.itch.io</a></span>
+                <span>GitHub: <a href="https://github.com/DiplexFrancesco" target="_blank">github.com/DiplexFrancesco</a></span>
+            </div>
+        </section>
+
+    </div>
+
+</body>
+</html>ial-scale=1.0">
     <title>Francesco Chiarantini | Gameplay Programmer & Tech Designer</title>
     <style>
         :root {
